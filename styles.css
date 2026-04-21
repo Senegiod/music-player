@@ -1,0 +1,290 @@
+@property --c1 {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #3b0a45;
+}
+
+@property --c2 {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #1b2a4a;
+}
+
+:root {
+    --c1: #3b0a45;
+    --c2: #1b2a4a;
+    transition: --c1 0.8s ease, --c2 0.8s ease;
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:
+        radial-gradient(circle at 20% 20%, var(--c1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, var(--c2) 0%, transparent 45%),
+        linear-gradient(180deg, #050814, #070a12);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.glass {
+    backdrop-filter: blur(24px) saturate(220%);
+    -webkit-backdrop-filter: blur(24px) saturate(220%);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.18),
+        rgba(220, 220, 220, 0.2)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.searchbar {
+      padding: 10px 5px;
+      border-radius: 16px;
+    }
+
+.searchbar input {
+      background: none;
+      font-size: 20px;
+      border: none;
+      outline: none;
+      color: rgb(222, 222, 222);
+      overflow: hidden;
+
+}
+
+.search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 300px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.search-result-item {
+    backdrop-filter: blur(24px) saturate(220%);
+    -webkit-backdrop-filter: blur(24px) saturate(220%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(220,220,220,0.15));
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    border-radius: 14px;
+    padding: 10px 16px;
+    color: rgb(222,222,222);
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-result-item:hover {
+    background: rgba(255,255,255,0.25);
+    transform: scale(1.02);
+}
+
+.search-result-item .result-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.search-result-item .result-artist {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.glass-title {
+    padding: 12px 20px;
+    border-radius: 16px;
+    color: rgb(222, 222, 222);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.glass-card {
+    width: 300px;
+    height: 300px;
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cover {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#coverImgNext {
+    transform: translateX(100%);
+}
+
+.glass-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.glass-button:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.glass-button img {
+    width: 22px;
+    height: 22px;
+}
+
+.flipped {
+    transform: scaleX(-1);
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.glass-progress {
+    width: 300px;
+    height: 8px;
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+}
+
+.glass-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.3),
+        rgba(224, 224, 224, 0.3)
+    );
+    border-radius: 999px;
+    transition: width 0.1s linear;
+    pointer-events: none;
+}
+
+.progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.small-btn {
+    width: 35px;
+    height: 30px;
+}
+
+.small-btn img {
+    width: 14px;
+    height: 14px;
+}
+
+.active {
+    background: rgba(255, 255, 255, 0.35) !important;
+    box-shadow:
+        0 0 15px rgba(255, 255, 255, 0.4),
+        0 16px 48px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+}
+
+.toggle input {
+    display: none;
+}
+
+.slider {
+    width: 50px;
+    height: 26px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 999px;
+    display: block;
+    position: relative;
+    transition: 0.3s;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: 0.3s;
+}
+
+input:checked + .slider {
+    background: rgba(255,255,255,0.4);
+}
+
+input:checked + .slider::before {
+    transform: translateX(24px);
+}
+
+@keyframes slideOutLeft {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
+}
+
+@keyframes slideOutRight {
+    from { transform: translateX(0); }
+    to   { transform: translateX(100%); }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(0); }
+}
+
+.slide-out-left  { animation: slideOutLeft  0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.slide-out-right { animation: slideOutRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.slide-in-right  { animation: slideInRight  0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.slide-in-left   { animation: slideInLeft   0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }

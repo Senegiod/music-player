@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+
+  <title>Music Player UI</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
+  <script src="script.js" defer></script>
+  
+</head>
+
+<body>
+
+<div class="container">
+
+  <label class="toggle" id="toggleBtn">
+    <input type="checkbox" id="toggleInput">
+    <span class="slider"></span>
+  </label>
+
+  <div class="glass glass-title">
+    Music Player
+  </div>
+
+  <div class="searchbar glass">
+    <input type="search" id="search" placeholder="search Songs">
+    <div id="searchResults" class="search-results"></div>
+  </div>
+
+  <div class="glass glass-card">
+      <div class="cover">
+        <img id="coverImg" alt="cover" crossorigin="anonymous">
+        <img id="coverImgNext" alt="cover" crossorigin="anonymous">
+      </div>
+  </div>
+  <div class="progress-row">
+    <div class="left" id="songTime">0:00</div>
+    <div class="glass glass-progress" id="progressBar">
+      <div class="glass-fill" id="fill"></div>
+    </div>
+    <div class="right" id="songLen">0:00</div>
+  </div>
+
+
+  <div class="controls">
+
+    <button class="glass glass-button small-btn" id="repeatBtn">
+      <img src="icon/repeat.png" alt="repeat">
+    </button>
+
+    <button class="glass glass-button" id="prevBtn">
+      <img src="icon/next.png" class="flipped">
+    </button>
+
+    <button id="playBtn" class="glass glass-button">
+      <img src="icon/play.png" id="icon">
+    </button>
+
+    <button class="glass glass-button" id="nextBtn">
+      <img src="icon/next.png">
+    </button>
+
+    <button class="glass glass-button small-btn" id="shuffleBtn">
+      <img src="icon/shuffle.png" alt="shuffle">
+    </button>
+
+  </div>
+</div>
+
+</body>
+</html>
