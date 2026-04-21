@@ -11,9 +11,12 @@ const fill = document.getElementById("fill");
 const progressBar = document.getElementById("progressBar");
 const currentTimeEl = document.getElementById("songTime");
 const durationEl = document.getElementById("songLen");
-const toggleInput = document.getElementById("toggleInput")
-const songAmnt = 5;
+const toggleInput = document.getElementById("toggleInput");
+const searchInput = document.getElementById("search");
+const searchResults = document.getElementById("searchResults");
 
+let songAmnt = 0;
+let songsData = [];
 let adaptiveColoring = false;
 let repeat = false;
 let shuffle = false;
@@ -23,51 +26,69 @@ let lastCoverID = -1;
 let direction = 1;
 
 audio.preload = "metadata";
-coverImg.src = "songs/song0/cover.jpg";
+coverImg.src = "songs/cover/cover" + songID + ".jpg";
 coverImg.onload = () => updateColorsFromCover();
 lastCoverID = 0;
 
-loadSong(songID);
+fetch("songs.json")
+    .then(res => res.json())
+    .then(data => {
+        songsData = data;
+        songAmnt = songsData.length
+
+        loadSong(songID);
+    });
 isPlaying = false;
 icon.src = "icon/play.png";
 
 function loadSong(id) {
-    audio.src = "songs/song" + id + ".flac";
 
-    if (id === lastCoverID) {
-        audio.play();
-        isPlaying = true;
-        icon.src = "icon/pause.png";
-        return;
+    const song = songsData.find(s => Number(s.id) === Number(id));
+
+    if (!song) return;
+
+    songID = id;
+
+    audio.src = "songs/song" + id + ".flac";
+    audio.load();
+
+    const box = document.getElementById("song-box");
+    if (box) {
+        box.innerHTML = `
+            <div class="song-title">${song.title}</div>
+            <div class="song-artist">${song.artist}</div>
+        `;
     }
 
-    lastCoverID = id;
-    coverImgNext.src = "songs/song" + id + "/cover.jpg";
+    
+    if (id !== lastCoverID) {
+        lastCoverID = id;
 
-    coverImgNext.onload = () => {
-        if (direction === 1) {
-            coverImgNext.style.transform = "translateX(100%)";
-            coverImg.classList.add("slide-out-left");
-            coverImgNext.classList.add("slide-in-right");
-        } else {
-            coverImgNext.style.transform = "translateX(-100%)";
-            coverImg.classList.add("slide-out-right");
-            coverImgNext.classList.add("slide-in-left");
-        }
+        coverImgNext.src = "songs/cover/cover" + id + ".jpg";
 
-        setTimeout(() => {
-            coverImg.src = coverImgNext.src;
-            coverImg.style.transform = "translateX(0)";
-            coverImg.classList.remove("slide-out-left", "slide-out-right");
-            coverImgNext.classList.remove("slide-in-right", "slide-in-left");
-            coverImgNext.style.transform = "translateX(100%)";
-            updateColorsFromCover();
-        }, 500);
-    };
+        coverImgNext.onload = () => {
+            if (direction === 1) {
+                coverImgNext.style.transform = "translateX(100%)";
+                coverImg.classList.add("slide-out-left");
+                coverImgNext.classList.add("slide-in-right");
+            } else {
+                coverImgNext.style.transform = "translateX(-100%)";
+                coverImg.classList.add("slide-out-right");
+                coverImgNext.classList.add("slide-in-left");
+            }
 
-    audio.play();
-    isPlaying = true;
-    icon.src = "icon/pause.png";
+            setTimeout(() => {
+                coverImg.src = coverImgNext.src;
+                coverImg.style.transform = "translateX(0)";
+                coverImg.classList.remove("slide-out-left", "slide-out-right");
+                coverImgNext.classList.remove("slide-in-right", "slide-in-left");
+                coverImgNext.style.transform = "translateX(100%)";
+                updateColorsFromCover();
+            }, 500);
+        };
+
+        if (coverImgNext.complete) coverImgNext.onload();
+    }
 }
 
 function formatTime(seconds) {
@@ -140,14 +161,7 @@ progressBar.addEventListener("click", (e) => {
     if (!audio.duration || isNaN(audio.duration)) return;
     const rect = progressBar.getBoundingClientRect();
     const percent = (e.clientX - rect.left) / rect.width;
-    const newTime = percent * audio.duration;
-    
-    audio.currentTime = newTime;
-    
-    audio.addEventListener("seeked", () => {
-        currentTimeEl.textContent = formatTime(audio.currentTime);
-    }, { once: true });
-    
+    audio.currentTime = percent * audio.duration;
     audio.play();
     isPlaying = true;
     icon.src = "icon/pause.png";
@@ -174,6 +188,7 @@ prevBtn.addEventListener("click", () => {
     if (songID !== 0 && audio.currentTime <= 5) songID -= 1;
     audio.currentTime = 0;
     loadSong(songID);
+    audio.play()
 });
 
 nextBtn.addEventListener("click", () => {
@@ -182,6 +197,7 @@ nextBtn.addEventListener("click", () => {
     else songID += 1;
     if (songID >= songAmnt) songID = 0;
     loadSong(songID);
+    audio.play()
 });
 
 shuffleBtn.addEventListener("click", () => {
@@ -197,8 +213,60 @@ repeatBtn.addEventListener("click", () => {
 toggleInput.addEventListener("change", () => {
     adaptiveColoring = toggleInput.checked;
     if (!adaptiveColoring) {
-        setColors("#3b0a45", "#1b2a4a");  // ← zurück zu den standard farben aus deinem CSS
+        setColors("#3b0a45", "#1b2a4a"); 
     } else {
-        updateColorsFromCover();  // ← sofort farben laden wenn man es anmacht
+        updateColorsFromCover();  
     }
+});
+
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+    searchResults.innerHTML = "";
+
+    if (query === "") return;
+
+    const matches = songsData
+        .map(song => {
+            const title = song.title.toLowerCase();
+            const artist = song.artist.toLowerCase();
+
+            let score = 0;
+
+            if (title.startsWith(query)) score += 5;
+            else if (title.includes(" " + query)) score += 3;
+            else if (title.includes(query)) score += 1;
+
+            if (artist.startsWith(query)) score += 4;
+            else if (artist.includes(query)) score += 2;
+
+            return { song, score };
+        })
+        .filter(item => item.score > 0)
+        .sort((a, b) => {
+            if (b.score !== a.score) return b.score - a.score;
+            return a.song.title.localeCompare(b.song.title);
+        })
+        .map(item => item.song);
+
+    matches.forEach(song => {
+        const item = document.createElement("div");
+        item.classList.add("search-result-item");
+
+        item.innerHTML = `
+            <span class="result-title">${song.title}</span>
+            <span class="result-artist">${song.artist}</span>
+        `;
+
+        item.addEventListener("click", () => {
+            songID = song.id;
+            direction = 1;
+            loadSong(songID);
+            searchInput.value = "";
+            searchResults.innerHTML = "";
+            isPlaying = true
+            audio.play()
+        });
+
+        searchResults.appendChild(item);
+    });
 });
