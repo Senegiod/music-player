@@ -341,21 +341,47 @@ input:checked + .slider::before {
 }
 
 #volumeSlider {
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 120px;
+    background: transparent;
     position: absolute;
-    left: -70px;   
+    left: -70px;
     top: 50%;
     transform: translateY(-50%) rotate(-90deg);
+    z-index: 9999;
 }
 
-#volumeSlider:hover {
-    opacity: 1;
+#volumeSlider::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
 }
 
 #volumeSlider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: white;
-    cursor: pointer;
+
+    width: 2px;
+    height: 18px;  
+
+    background: #b8b8b8;
+    border: none;
+
+    border-radius: 1px;
+
+    box-shadow: none;
+
+    margin-top: -6px;
+}
+
+#volumeSlider::-moz-range-thumb {
+    width: 2px;
+    height: 18px;
+
+    background: #787487;
+    border: none;
+    border-radius: 1px;
 }

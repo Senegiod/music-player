@@ -15,6 +15,7 @@ const toggleInput = document.getElementById("toggleInput");
 const searchInput = document.getElementById("search");
 const searchResults = document.getElementById("searchResults");
 const volumeSlider = document.getElementById("volumeSlider");
+const slider = document.getElementById("volumeSlider");
 
 let songAmnt = 0;
 let songsData = [];
@@ -292,3 +293,19 @@ searchInput.addEventListener("input", () => {
 volumeSlider.addEventListener("input", (e) => {
     audio.volume = e.target.value;
 });
+
+function updateSlider() {
+    const percent = slider.value * 100;
+
+    slider.style.background = `
+        linear-gradient(90deg,
+            #0b1b3a 0%,
+            #2a1b4a ${percent}%,
+            rgba(255,255,255,0.08) ${percent}%,
+            rgba(255,255,255,0.08) 100%
+        )
+    `;
+}
+
+slider.addEventListener("input", updateSlider);
+updateSlider();

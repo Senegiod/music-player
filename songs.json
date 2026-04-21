@@ -3,5 +3,13 @@
     { "id": 1, "title": "Champion", "artist": "Kayne West" },
     { "id": 2, "title": "Stronger", "artist": "Kayne West" },
     { "id": 3, "title": "I Wonder", "artist": "Kayne West" },
-    { "id": 4, "title": "All Of The Lights", "artist": "Kayne West fr. Rihabba, Kid Cudi"}
+    { "id": 4, "title": "All Of The Lights", "artist": "Kayne West fr. Rihabba, Kid Cudi"},
+    { "id": 5, "title": "Ms. Jackson", "artist": "Pashanim"},
+    { "id": 6, "title": "Famous", "artist": "Lil Wayne, Reginae Carter"},
+    { "id": 7, "title": "Noticed", "artist": "Lil Mosey"},
+    { "id": 8, "title": "Remedy", "artist": "Leony"},
+    { "id": 9, "title": "Remedy", "artist": "KYTES"},
+    { "id": 10, "title": "NUR1WORT", "artist": "Noah Kraus x Wir sind Helden"},
+    { "id": 11, "title": "Hate Myself", "artist": "NF"}
+
 ]
