@@ -27,7 +27,8 @@ let songID = 0;
 let lastCoverID = -1;
 let direction = 1;
 
-volumeSlider.value = 0.5;
+volumeSlider.value = 0.3;
+audio.volume = 0.3;
 audio.preload = "metadata";
 coverImg.src = "songs/cover/cover" + songID + ".jpg";
 coverImg.onload = () => updateColorsFromCover();
@@ -116,35 +117,27 @@ function setColors(c1, c2) {
 }
 
 function updateColorsFromCover() {
-    if (adaptiveColoring) {
-        const colorThief = new ColorThief();
-        function extract() {
-            try {
-                const palette = colorThief.getPalette(coverImg, 2);
-                const c1 = "rgb(" + palette[0][0] + ", " + palette[0][1] + ", " + palette[0][2] + ")";
-                const c2 = "rgb(" + palette[1][0] + ", " + palette[1][1] + ", " + paleaudio.addEventListener("ended", () => {
-    if (repeat) {
-        audio.currentTime = 0;
-        audio.play();
-    } else if (shuffle) {
-        direction = 1;
-        songID = getRandomSong();
-        loadSong(songID);
+    if (!adaptiveColoring) return;
+
+    const colorThief = new ColorThief();
+
+    const extract = () => {
+        try {
+            const palette = colorThief.getPalette(coverImg, 2);
+
+            const c1 = `rgb(${palette[0][0]}, ${palette[0][1]}, ${palette[0][2]})`;
+            const c2 = `rgb(${palette[1][0]}, ${palette[1][1]}, ${palette[1][2]})`;
+
+            setColors(c1, c2);
+        } catch (e) {
+            console.warn("ColorThief error:", e);
+        }
+    };
+
+    if (coverImg.complete && coverImg.naturalWidth > 0) {
+        extract();
     } else {
-        direction = 1;
-        songID += 1;
-        if (songID >= songAmnt) songID = 0;
-        loadSong(songID);
-    }
-});tte[1][2] + ")";
-                setColors(c1, c2);
-            } catch (e) {}
-        }
-        if (coverImg.complete && coverImg.naturalWidth > 0) {
-            extract();
-        } else {
-            coverImg.onload = extract;
-        }
+        coverImg.onload = extract;
     }
 }
 
@@ -207,6 +200,8 @@ prevBtn.addEventListener("click", () => {
     if (songID !== 0 && audio.currentTime <= 5) songID -= 1;
     audio.currentTime = 0;
     loadSong(songID);
+    isPlaying= true
+    icon.src="icon/pause.png"
     audio.play()
 });
 
@@ -216,6 +211,8 @@ nextBtn.addEventListener("click", () => {
     else songID += 1;
     if (songID >= songAmnt) songID = 0;
     loadSong(songID);
+    isPlaying= true
+    icon.src="icon/pause.png"
     audio.play()
 });
 
