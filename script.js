@@ -14,6 +14,7 @@ const durationEl = document.getElementById("songLen");
 const toggleInput = document.getElementById("toggleInput");
 const searchInput = document.getElementById("search");
 const searchResults = document.getElementById("searchResults");
+const volumeSlider = document.getElementById("volumeSlider");
 
 let songAmnt = 0;
 let songsData = [];
@@ -25,6 +26,7 @@ let songID = 0;
 let lastCoverID = -1;
 let direction = 1;
 
+volumeSlider.value = 0.5;
 audio.preload = "metadata";
 coverImg.src = "songs/cover/cover" + songID + ".jpg";
 coverImg.onload = () => updateColorsFromCover();
@@ -44,7 +46,7 @@ icon.src = "icon/play.png";
 function loadSong(id) {
 
     const song = songsData.find(s => Number(s.id) === Number(id));
-
+    audio.currentTime = 0;
     if (!song) return;
 
     songID = id;
@@ -119,7 +121,21 @@ function updateColorsFromCover() {
             try {
                 const palette = colorThief.getPalette(coverImg, 2);
                 const c1 = "rgb(" + palette[0][0] + ", " + palette[0][1] + ", " + palette[0][2] + ")";
-                const c2 = "rgb(" + palette[1][0] + ", " + palette[1][1] + ", " + palette[1][2] + ")";
+                const c2 = "rgb(" + palette[1][0] + ", " + palette[1][1] + ", " + paleaudio.addEventListener("ended", () => {
+    if (repeat) {
+        audio.currentTime = 0;
+        audio.play();
+    } else if (shuffle) {
+        direction = 1;
+        songID = getRandomSong();
+        loadSong(songID);
+    } else {
+        direction = 1;
+        songID += 1;
+        if (songID >= songAmnt) songID = 0;
+        loadSong(songID);
+    }
+});tte[1][2] + ")";
                 setColors(c1, c2);
             } catch (e) {}
         }
@@ -175,11 +191,13 @@ audio.addEventListener("ended", () => {
         direction = 1;
         songID = getRandomSong();
         loadSong(songID);
+        audio.play()
     } else {
         direction = 1;
         songID += 1;
         if (songID >= songAmnt) songID = 0;
         loadSong(songID);
+        audio.play()
     }
 });
 
@@ -269,4 +287,8 @@ searchInput.addEventListener("input", () => {
 
         searchResults.appendChild(item);
     });
+});
+
+volumeSlider.addEventListener("input", (e) => {
+    audio.volume = e.target.value;
 });

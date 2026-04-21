@@ -30,12 +30,19 @@
     <div id="searchResults" class="search-results"></div>
   </div>
 
-  <div class="glass glass-card">
-      <div class="cover">
-        <img id="coverImg" alt="cover" crossorigin="anonymous">
-        <img id="coverImgNext" alt="cover" crossorigin="anonymous">
-      </div>
+
+<div class="player-area">
+
+  <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+
+  <div class="glass glass-card cover-fixed">
+    <div class="cover">
+      <img id="coverImg">
+      <img id="coverImgNext">
+    </div>
   </div>
+
+</div>
 
   <div id="song-box" class="glass song-box"></div>
 

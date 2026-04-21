@@ -286,6 +286,25 @@ input:checked + .slider::before {
     color: rgb(222, 222, 222);
 }
 
+.player-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Cover bleibt exakt mittig */
+    gap: 20px;
+}
+
+.player-area {
+    position: relative;
+    width: 100%;
+    height: 320px;
+}
+
+.cover-fixed {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+}
 
 @keyframes slideOutLeft {
     from { transform: translateX(0); }
@@ -319,4 +338,24 @@ input:checked + .slider::before {
 
 #searchResults::-webkit-scrollbar {
     display: none;
+}
+
+#volumeSlider {
+    position: absolute;
+    left: -70px;   
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+}
+
+#volumeSlider:hover {
+    opacity: 1;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
 }
