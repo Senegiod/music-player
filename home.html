@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+
+  <title>Music Player UI</title>
+
+  <link rel="stylesheet" href="stylesH.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
+  <script src="scriptH.js" defer></script>
+  
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="glass glass-title">
+    Music Player
+  </div>
+
+  <div class="searchbar glass">
+    <input type="search" id="search" placeholder="search Songs">
+    <div id="searchResults" class="search-results"></div>
+  </div>
+</div> 
+
+<div class="rows">
+
+  <div class="row">
+    <h2>Trending</h2>
+    <div class="row-container" id="row-1"></div>
+  </div>
+
+  <div class="row">
+    <h2>For You</h2>
+    <div class="row-container" id="row-2"></div>
+  </div>
+
+  <div class="row">
+    <h2>Top</h2>
+    <div class="row-container" id="row-3"></div>
+  </div>
+
+</div>
+
+</body>
+</html>

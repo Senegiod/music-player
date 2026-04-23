@@ -225,9 +225,8 @@ body {
 
 .toggle {
     position: fixed;
-    top: 20px;
-    left: 20px;
     cursor: pointer;
+    margin: 40px;
 }
 
 .toggle input {
@@ -250,7 +249,7 @@ body {
     position: absolute;
     width: 20px;
     height: 20px;
-    background: white;
+    background: rgb(222, 222, 222);
     border-radius: 50%;
     top: 3px;
     left: 3px;
@@ -258,7 +257,7 @@ body {
 }
 
 input:checked + .slider {
-    background: rgba(255,255,255,0.4);
+    background: var(--c1);
 }
 
 input:checked + .slider::before {
@@ -289,7 +288,7 @@ input:checked + .slider::before {
 .player-center {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Cover bleibt exakt mittig */
+    align-items: center;
     gap: 20px;
 }
 
@@ -304,6 +303,23 @@ input:checked + .slider::before {
     left: 50%;
     top: 0;
     transform: translateX(-50%);
+}
+
+.home{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    top: 15px;
+    left: 30px;
+    width: 120px;
+    border-radius: 16px;
+}
+
+.link {
+    color: rgb(222, 222, 222);
+    text-decoration: none;
+    font-size: 20px;
+    margin: 0 auto;
 }
 
 @keyframes slideOutLeft {
